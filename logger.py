@@ -14,6 +14,14 @@ class Logger:
         else:  
             print ("     ===> Successfully created the directory %s \n" % path)
 
+        try:
+            os.makedirs(path + "models/")
+        except OSError:  
+            print ("Creation of the model directory failed")
+        else:  
+            print ("     ===> Successfully created the model directory)
+
+
     def log(self, text):
         with open(self.default_filename, 'a') as f:
             f.writelines(text)
