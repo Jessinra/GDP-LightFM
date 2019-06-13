@@ -48,7 +48,6 @@ print("     =====> Model created")
 
 print("     =====> Running K5 models")
 logger.log(str(model_k5.get_params()))
-print(model_k5.get_params())
 
 for epoch in tqdm(range(epochs)): 
     
@@ -62,7 +61,6 @@ logger.log("\n\n")
 
 print("     =====> Running K10 models")
 logger.log(str(model_k10.get_params()))
-print(model_k10.get_params())
 
 for epoch in tqdm(range(epochs)): 
     
