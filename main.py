@@ -27,7 +27,6 @@ session_log_path = "log/{}/".format(timestamp)
 logger.create_session_folder(session_log_path)
 logger.set_default_filename(session_log_path + "log.txt")
 
-
 # ========== Models ==========
 model_k5 = LightFM(no_components=num_components,
                     loss='warp',
@@ -48,6 +47,7 @@ print("     =====> Model created")
 # ========== Train ==========
 
 print("     =====> Running K5 models")
+logger.log(model_k5.get_params())
 for epoch in tqdm(range(epochs)): 
     
     model_k5.fit_partial(train, epochs=1, num_threads=4)
@@ -56,7 +56,11 @@ for epoch in tqdm(range(epochs)):
     logger.log("Precision k5 : {}".format(mean_precision))
     logger.save_model(model_k5, session_log_path + "models/epoch_{}".format(epoch))
 
+logger.log("\n\n")
+
 print("     =====> Running K10 models")
+logger.log(model_k10.get_params())
+
 for epoch in tqdm(range(epochs)): 
     
     model_k10.fit_partial(train, epochs=1, num_threads=4)
