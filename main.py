@@ -23,7 +23,7 @@ num_components = 32
 timestamp = str(datetime.timestamp(datetime.now()))
 
 logger = Logger()
-session_log_path = "../log/{}/".format(timestamp)
+session_log_path = "log/{}/".format(timestamp)
 logger.create_session_folder(session_log_path)
 logger.set_default_filename(session_log_path + "log.txt")
 
