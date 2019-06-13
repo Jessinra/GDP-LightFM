@@ -54,7 +54,7 @@ for epoch in tqdm(range(epochs)):
     
     mean_precision = precision_at_k(model_k5, train, k=5).mean()
     logger.log("Precision k5 : {}".format(mean_precision))
-    logger.save_model(model_k5, session_log_path + "models/epoch_{}".format(step))
+    logger.save_model(model_k5, session_log_path + "models/epoch_{}".format(epoch))
 
 print("     =====> Running K10 models")
 for epoch in tqdm(range(epochs)): 
@@ -63,4 +63,4 @@ for epoch in tqdm(range(epochs)):
 
     mean_precision = precision_at_k(model_k10, train, k=10).mean()
     logger.log("Precision k10 : {}".format(mean_precision))
-    logger.save_model(model_k10, session_log_path + "models/epoch_{}".format(step))
+    logger.save_model(model_k10, session_log_path + "models/epoch_{}".format(epoch))
