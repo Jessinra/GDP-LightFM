@@ -19,7 +19,7 @@ class Logger:
         except OSError:  
             print ("Creation of the model directory failed")
         else:  
-            print ("     ===> Successfully created the model directory)
+            print ("     ===> Successfully created the model directory")
 
 
     def log(self, text):
