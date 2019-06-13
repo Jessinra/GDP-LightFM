@@ -47,7 +47,9 @@ print("     =====> Model created")
 # ========== Train ==========
 
 print("     =====> Running K5 models")
-logger.log(model_k5.get_params())
+logger.log(str(model_k5.get_params()))
+print(model_k5.get_params())
+
 for epoch in tqdm(range(epochs)): 
     
     model_k5.fit_partial(train, epochs=1, num_threads=4)
@@ -59,7 +61,8 @@ for epoch in tqdm(range(epochs)):
 logger.log("\n\n")
 
 print("     =====> Running K10 models")
-logger.log(model_k10.get_params())
+logger.log(str(model_k10.get_params()))
+print(model_k10.get_params())
 
 for epoch in tqdm(range(epochs)): 
     
