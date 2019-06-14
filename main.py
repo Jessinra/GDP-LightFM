@@ -17,8 +17,8 @@ print("     =====> Dataset loaded")
 
 # ========== Parameter ==========
 alpha = 1e-03
-epochs = 30
-num_components = 32
+epochs = 50
+num_components = 64
 
 timestamp = str(datetime.timestamp(datetime.now()))
 
@@ -44,6 +44,12 @@ model_k10 = LightFM(no_components=num_components,
 
 print("     =====> Model created")
 
+# ========== User & Movie features ==========
+
+import numpy as np
+user_identity = np.identity(train.shape[0])
+item_identity = np.identity(train.shape[1])
+
 # ========== Train ==========
 
 print("     =====> Running K5 models")
@@ -51,7 +57,7 @@ logger.log(str(model_k5.get_params()))
 
 for epoch in tqdm(range(epochs)): 
     
-    model_k5.fit_partial(train, epochs=1, num_threads=4)
+    model_k5.fit_partial(train, epochs=1, user_features=user_identity, item_features=item_identity, num_threads=4)
     
     mean_precision = precision_at_k(model_k5, train, k=5).mean()
     logger.log("Precision k5 : {}".format(mean_precision))
@@ -64,7 +70,7 @@ logger.log(str(model_k10.get_params()))
 
 for epoch in tqdm(range(epochs)): 
     
-    model_k10.fit_partial(train, epochs=1, num_threads=4)
+    model_k10.fit_partial(train, epochs=1, user_features=user_identity, item_features=item_identity, num_threads=4)
 
     mean_precision = precision_at_k(model_k10, train, k=10).mean()
     logger.log("Precision k10 : {}".format(mean_precision))
