@@ -46,9 +46,10 @@ print("     =====> Model created")
 
 # ========== User & Movie features ==========
 
-import numpy as np
-user_identity = np.identity(train.shape[0])
-item_identity = np.identity(train.shape[1])
+from scipy.sparse import identity
+
+user_identity = identity(train.shape[0])
+item_identity = identity(train.shape[1])
 
 # ========== Train ==========
 
