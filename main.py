@@ -16,9 +16,10 @@ train, test = random_train_test_split(ratings_pivot, test_percentage=0.2)
 print("     =====> Dataset loaded")
 
 # ========== Parameter ==========
-alpha = 1e-03
+alpha = 0.003
 epochs = 50
 num_components = 64
+step = 5
 
 timestamp = str(datetime.timestamp(datetime.now()))
 
@@ -56,9 +57,9 @@ item_identity = identity(train.shape[1])
 print("     =====> Running K5 models")
 logger.log(str(model_k5.get_params()))
 
-for epoch in tqdm(range(epochs)): 
+for epoch in tqdm(range(0, epochs, step)): 
     
-    model_k5.fit_partial(train, epochs=1, user_features=user_identity, item_features=item_identity, num_threads=4)
+    model_k5.fit_partial(train, epochs=step, user_features=user_identity, item_features=item_identity, num_threads=6, verbose=True)
     
     mean_precision = precision_at_k(model_k5, train, k=5).mean()
     logger.log("Precision k5 : {}".format(mean_precision))
@@ -69,9 +70,9 @@ logger.log("\n\n")
 print("     =====> Running K10 models")
 logger.log(str(model_k10.get_params()))
 
-for epoch in tqdm(range(epochs)): 
+for epoch in tqdm(range(0, epochs, step)): 
     
-    model_k10.fit_partial(train, epochs=1, user_features=user_identity, item_features=item_identity, num_threads=4)
+    model_k10.fit_partial(train, epochs=step, user_features=user_identity, item_features=item_identity, num_threads=6, verbose=True)
 
     mean_precision = precision_at_k(model_k10, train, k=10).mean()
     logger.log("Precision k10 : {}".format(mean_precision))
