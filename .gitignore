@@ -1,4 +1,7 @@
 .ipynb_checkpoints/
-data/
 __pycache__/
+
+data/ml-20m
+*.csr
+
 log/*/models
