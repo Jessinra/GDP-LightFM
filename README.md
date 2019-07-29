@@ -1,5 +1,5 @@
 # GDP-LightFM
-***Last edit : 30 June 2019***
+***Last edit : 29 July 2019***
 
 Recommender system using [LightFM](https://lyst.github.io/lightfm/docs/home.html) (without knowledge graph), trained using custom [MovieLens-20M](https://grouplens.org/datasets/movielens/20m/) dataset.
 <br>
@@ -8,11 +8,11 @@ Recommender system using [LightFM](https://lyst.github.io/lightfm/docs/home.html
 *Given a user and a list of items, find the top k items that user might like.*
 
 # Contents
-- data : contains dataset to use in training
-    - ***intersect-20m*** : custom ml-20m dataset where only movies shows up in Ripple-Net's knowledge graph used.    
-    - ml-1m : original movielens 1m dataset
-- **log** : contains training result stored in single folder named after training timestamp.
-- **test** : contains jupyter notebook used in testing the trained models
+- `/data` : contains dataset to use in training
+    - ***`/intersect-20m`*** : custom ml-20m dataset where only movies shows up in Ripple-Net's knowledge graph used.    
+    - `/ml-1m` : original movielens 1m dataset
+- **`/log`** : contains training result stored in single folder named after training timestamp.
+- **`/test`** : contains jupyter notebook used in testing the trained models
 <!-- ---------------------------------------- -->
 - `logger.py` : log training result and save models
 - `main.py` : script to run training 
@@ -22,13 +22,6 @@ Recommender system using [LightFM](https://lyst.github.io/lightfm/docs/home.html
 ### Note
     *italic* means this folder is ommited from git, but necessary if you need to run experiments
     **bold** means this folder has it's own README, check it for detailed information :)
-
-# How to run
-1. Prepare the dataset (check section below this)
-2. Run the training script
-    ~~~
-    python3 main.py
-    ~~~
 
 # Preparing 
 ## Installing dependencies 
@@ -47,6 +40,13 @@ You can download the intersect-20m dataset [here](https://github.com/Jessinra/GD
 ## How to prepare data
 Simply provide `data/intersect-20m/ratings.csr` and run `main.py`, the script will preprocess it before training begin.
 
+# How to run
+1. Prepare the dataset (check section below this)
+2. Run the training script
+    ~~~
+    python3 main.py
+    ~~~
+
 # Training
 ## How to change hyper parameter
 There are several ways to do this :
@@ -62,11 +62,21 @@ There are several ways to do this :
 5. Run the notebook
 
 # Final result
-| Metric             | Value       |
-|--------------------|-------------|
-| Average prec@10    | +- 0.09     |
-| Diversity@10 n=10  | 0.11 - 0.20 |
-| Evaluated on       | 13.5k users |
+| Evaluated on  |  Prec@10   |
+|---------------|------------|
+|    500 user   |   0.09100  |
+|   1000 user   |   0.09330  |
+|   5000 user   |   0.09902  |
+|  13850 user   |   0.09864  |
+|  25000 user   |   0.09764  |
+
+| Evaluated on  | Distinct@10   | Unique items |
+|---------------|---------------|--------------|
+|     10 user   |    0.23000    |    23        |
+|     30 user   |    0.04333    |    13        |
+|    100 user   |    0.01300    |    13        |
+|   1000 user   |    0.00190    |    19        |
+|   3000 user   |    0.00043    |    13        |
 
 # Other findings
 - Models tends to suggest generic items that are rated high by a large number of users.
@@ -74,6 +84,16 @@ There are several ways to do this :
 - It's user centric, when predicting, the model require input (users, items) and will output score for each user-items pairing.
 - Require re-train if model want to predict for new user
 - Model can be improved using user's features and item's features (also handle cold-start problem)
+
+# Pros
+- Model can handle cold-start problem; improved using user's features and item's features (eg: user genre preferences / other features).
+- The model uses suitable loss and metric (Prec@k)
+
+# Cons
+- Models tends to suggest generic items that are rated high by a large number of users.
+- LightFM model is much slower to train & test (compared to Autorec) since it doesn't support GPU
+- It's user centric, when predicting, the model require input (users, items) and will output score for each user-items pairing
+- Require re-train if model want to predict for new user
 
 # Experiment notes
 - The model doesn't learn when dimension set to 64
