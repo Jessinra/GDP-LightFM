@@ -1,4 +1,4 @@
 tqdm==4.32.1
 lightfm==1.15
-scipy==1.3.0
+scipy==1.10.0
 scikit_learn==0.21.2
